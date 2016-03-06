@@ -28,7 +28,7 @@ int stringToInt (string inputString)
 */
 
 
-int findRowLength (int currentSize, Int2D index)
+int findRowLength (int currentSize, Int2D index) // Unused; I thought it would be helpful, but I guess it's not.
 {
 
 	return (currentSize + (index.y - index.x));
@@ -70,6 +70,11 @@ void CreatePascalsTriangle (int maxHeight, vector<int> &pascalsTriangle)
 				up = 0;
 			}
 
+			newValue = (up == 0 || upLeft == 0) ? (up == 0) ? pascalsTriangle.at(upLeft) : pascalsTriangle.at(up) : pascalsTriangle.at(up) + pascalsTriangle.at(upLeft);
+
+			/*
+			Same as above, just less 'pro'-grammer	:3
+
 			if (up == 0 || upLeft == 0)
 			{
 
@@ -78,6 +83,7 @@ void CreatePascalsTriangle (int maxHeight, vector<int> &pascalsTriangle)
 
 				newValue = pascalsTriangle.at(up) + pascalsTriangle.at(upLeft);
 			}
+			*/
 
 			pascalsTriangle.push_back(newValue);
 			index.x += 1;
@@ -88,12 +94,16 @@ void CreatePascalsTriangle (int maxHeight, vector<int> &pascalsTriangle)
 }
 
 
-string createPadding (int currentIndex)
+string createPadding (int maxHeight, int rowsSoFar)
 {
 
 	string padding = "";
 
+	for (int i = rowsSoFar; i < maxHeight; i++)
+	{
 
+		padding += ' ';
+	}
 
 	return padding;
 }
@@ -124,6 +134,8 @@ TerminalInputOutput::TerminalInputOutput()
 	vector<int> pascalsTriangle;
 	CreatePascalsTriangle (triangleSize, pascalsTriangle);
 
+	cout << endl << createPadding (triangleSize, 0);
+
 	int newLineIndex = 0;
 	int newLineMax = 1;
 	for (int i : pascalsTriangle)
@@ -135,7 +147,7 @@ TerminalInputOutput::TerminalInputOutput()
 		if (newLineIndex >= newLineMax)
 		{
 
-			cout << endl;
+			cout << endl << createPadding (triangleSize, newLineMax);
 			newLineIndex = 0;
 			newLineMax += 1;
 		}
